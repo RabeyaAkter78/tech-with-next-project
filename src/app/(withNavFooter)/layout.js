@@ -1,3 +1,4 @@
+import Footer from "@/Components/Shared/Footer/Footer";
 import NavBar from "@/Components/Shared/Navbar/Navbar";
 
 const MainLayout = ({ children }) => {
@@ -6,6 +7,7 @@ const MainLayout = ({ children }) => {
     <div className="container mx-auto">
       <NavBar />
       <div className="mt-20">{children}</div>
+      <Footer></Footer>
     </div>
   );
 };
