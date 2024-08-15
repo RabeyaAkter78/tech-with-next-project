@@ -18,7 +18,7 @@ export default function Home() {
         <Faq></Faq>
         <Pricing></Pricing>
         <Contact></Contact>
-        {/* <Footer></Footer> */}
+        <Footer></Footer>
       </div>
     </main>
   );

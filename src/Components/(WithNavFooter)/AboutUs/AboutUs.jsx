@@ -5,7 +5,7 @@ import CardComponents from "../HomeComponents/CardComponents";
 
 const AboutUs = () => {
   return (
-    <div className="container mx-auto mt-36 mb-20">
+    <div className="container mx-auto mt-36 mb-20 p-2">
       <SectionTitle Heading={"About Us"}></SectionTitle>
       <div className="mt-24 mb-20 text-center ">
         <p>

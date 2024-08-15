@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Checkbox, ConfigProvider, Form, Input } from "antd";
+import TextArea from "antd/es/input/TextArea";
 
 function ContactForm() {
   const onFinish = (values) => {
@@ -9,27 +10,15 @@ function ContactForm() {
     console.log("Failed:", errorInfo);
   };
   return (
-    <div>
+    <div className="flex justify-center items-center p-5">
       <ConfigProvider
         theme={{
-          token: {},
-
           components: {
-            Card: {
-              colorTextDescription: "rgb(112,109,109)",
-              colorTextHeading: "rgb(57,56,56)",
-              fontHeight: 0,
-              fontSize: 28,
-              marginXS: 0,
-              headerFontSize: 30,
-              headerFontSizeSM: 30,
-              fontSizeLG: 0,
-              boxShadowCard:
-                "      0 1px 2px -3px rgba(0, 0, 0, 0.16),      0 3px 6px 0 rgba(0, 0, 0, 0.12),      0 5px 12px 4px rgba(0, 0, 0, 0.09)    ",
-              borderRadiusLG: 0,
-            },
             Form: {
               itemMarginBottom: 20,
+            },
+            Input: {
+              borderRadius: 0,
             },
           },
         }}
@@ -37,13 +26,19 @@ function ContactForm() {
         <Form
           name="basic"
           labelCol={{
-            span: 8,
+            xs: 24,
+            sm: 24,
+            md: 24,
           }}
           wrapperCol={{
-            span: 16,
+            xs: 24,
+            sm: 24,
+            md: 24,
           }}
           style={{
-            maxWidth: 800,
+            maxWidth: "100%",
+            width: "800px",
+            margin: "0 auto",
           }}
           initialValues={{
             remember: true,
@@ -57,30 +52,50 @@ function ContactForm() {
             rules={[
               {
                 required: true,
-                message: "Please input your username!",
+                message: "Please input your Full Name!",
               },
             ]}
           >
-            <Input placeholder="User Name" className="rounded-none" />
+            <Input placeholder="Full Name" />
           </Form.Item>
-
           <Form.Item
-            name="password"
+            name="email"
             rules={[
               {
                 required: true,
-                message: "Please input your password!",
+                message: "Please input your Email!",
               },
             ]}
           >
-            <Input.Password />
+            <Input placeholder="Email" />
           </Form.Item>
-
+          <Form.Item
+            name="telephone"
+            rules={[
+              {
+                required: true,
+                message: "Please input your Telephone Number!",
+              },
+            ]}
+          >
+            <Input placeholder="Telephone" />
+          </Form.Item>
+          <Form.Item
+            name="subject"
+            rules={[
+              {
+                required: true,
+                message: "Please input your Subject!",
+              },
+            ]}
+          >
+            <Input placeholder="subject" />
+          </Form.Item>
+          <TextArea rows={4} placeholder="Message" />
           <Form.Item
             name="remember"
             valuePropName="checked"
             wrapperCol={{
-              offset: 8,
               span: 16,
             }}
           >
@@ -89,7 +104,6 @@ function ContactForm() {
 
           <Form.Item
             wrapperCol={{
-              offset: 8,
               span: 16,
             }}
           >

@@ -69,8 +69,8 @@ const NavBar = () => {
         },
       }}
     >
-      <div className="fixed top-0 left-0 w-full z-40">
-        <div className="container mx-auto flex items-center py-4 px-6 lg:px-8">
+      <div className="fixed top-0 left-0 w-[100%] z-40">
+        <div className="container mx-auto flex items-center justify-center py-4 px-6 lg:px-8">
           <div className="flex items-center w-full">
             <Link href="/">
               <Image

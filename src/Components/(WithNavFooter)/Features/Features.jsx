@@ -9,7 +9,7 @@ const Features = () => {
   return (
     <div className="container mx-auto my-32 p-5">
       <SectionTitle Heading={"Key Features and Benefits"}></SectionTitle>
-      <div>
+      <div className="">
         <ConfigProvider
           theme={{
             token: {},

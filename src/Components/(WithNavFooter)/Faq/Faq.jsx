@@ -96,10 +96,10 @@ function Faq() {
           },
         }}
       >
-        <div>
+        <div className="p-2">
           <Collapse accordion items={items} />
         </div>
-        <div>
+        <div className="p-2">
           <QuickSupport></QuickSupport>
         </div>
       </ConfigProvider>

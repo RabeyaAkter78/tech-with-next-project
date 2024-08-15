@@ -7,7 +7,7 @@ import React from "react";
 function Banner() {
   return (
     <div className="relative container mx-auto ">
-      <div className=" w-full">
+      <div className="p-2 w-full">
         <div className="container mx-auto ">
           <ConfigProvider
             theme={{

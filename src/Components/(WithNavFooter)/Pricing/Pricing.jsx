@@ -8,7 +8,7 @@ function Pricing() {
   return (
     <div className="container mx-auto">
       <SectionTitle Heading={"Choose a plan to fit your needs"}></SectionTitle>
-      <div>
+      <div className="">
         <ConfigProvider
           theme={{
             token: {},
@@ -31,9 +31,9 @@ function Pricing() {
           }}
         >
           <div className="border-0 border-b-2 ">
-            <div className="flex flex-col lg:flex-row gap-10 lg:gap-0 justify-center items-center my-20">
+            <div className="flex flex-col lg:flex-row gap-10 lg:gap-0 justify-center items-center my-20 p-5">
               <div>
-                <Card title="Basic" className="w-96 text-center">
+                <Card title="Basic" className="md:w-96 text-center ">
                   <h1>£59.99</h1>
                   <p>5 GB of space</p>
                   <p>5 user</p>
@@ -47,7 +47,7 @@ function Pricing() {
                 </Card>
               </div>
               <div className="-mt-5">
-                <Card title="Basic" className="w-96 text-center">
+                <Card title="Basic" className="md:w-96 text-center">
                   <h1>£99.99</h1>
                   <p>Unlimited space</p>
                   <p>15 user</p>
@@ -61,7 +61,7 @@ function Pricing() {
                 </Card>
               </div>
               <div>
-                <Card title="Basic" className="w-96 text-center">
+                <Card title="Basic" className="md:w-96 text-center">
                   <h1>£29.99</h1>
                   <p>1 GB of space</p>
                   <p>1 user</p>
