@@ -9,6 +9,7 @@ import feature3 from "./great-support.jpg";
 import feature4 from "./easy-customise.jpg";
 import feature5 from "./unlimited-features.jpg";
 import feature6 from "./advanced-option.jpg";
+import parallax from "./bg-works.jpg";
 export const AllImages = {
   logo,
   heroImg,
@@ -21,5 +22,6 @@ export const AllImages = {
   feature4,
   feature5,
   feature6,
+  parallax,
 };
 export const AllIcons = {};

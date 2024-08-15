@@ -7,8 +7,8 @@ import { ImDatabase } from "react-icons/im";
 import { FaChartPie } from "react-icons/fa";
 function CardComponents() {
   return (
-    <div className="">
-      <div className="w-full border-0 border-b-2 justify-between items-center">
+    <div className="overflow-x-hidden ">
+      <div className="w-full justify-between items-center">
         <ConfigProvider
           theme={{
             token: {},

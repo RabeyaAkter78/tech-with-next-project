@@ -3,6 +3,7 @@ import Contact from "@/Components/(WithNavFooter)/Contacts/Contact";
 import Faq from "@/Components/(WithNavFooter)/Faq/Faq";
 import Features from "@/Components/(WithNavFooter)/Features/Features";
 import Banner from "@/Components/(WithNavFooter)/HomeComponents/Banner/Banner";
+import HowItWorks from "@/Components/(WithNavFooter)/HowItWorks/HowItWorks";
 import Pricing from "@/Components/(WithNavFooter)/Pricing/Pricing";
 import Footer from "@/Components/Shared/Footer/Footer";
 import NavBar from "@/Components/Shared/Navbar/Navbar";
@@ -15,6 +16,7 @@ export default function Home() {
         <Banner></Banner>
         <AboutUs></AboutUs>
         <Features></Features>
+        <HowItWorks></HowItWorks>
         <Faq></Faq>
         <Pricing></Pricing>
         <Contact></Contact>

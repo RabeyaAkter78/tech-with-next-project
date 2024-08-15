@@ -3,12 +3,14 @@ import { FaBolt } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
 import { FaLinkedinIn } from "react-icons/fa";
-import { FaPinterestP } from "react-icons/fa6";
+import { FaPinterestP } from "react-icons/fa";
 import { BsInstagram } from "react-icons/bs";
+import { BackTop } from "antd";
+// import { FloatButton } from "antd";
 function Footer() {
   return (
     <div className="bg-neutral-900">
-      <div className="container mx-auto my-20 py-20 text-white ">
+      <div className=" my-20 py-20 text-white ">
         <div className="flex gap-2 justify-center">
           <FaBolt className="w-10 h-10 text-blue-800" />
           <h1 className="text-4xl">TECH</h1>
@@ -22,6 +24,7 @@ function Footer() {
         </div>
         <p className="text-center my-5">Copyright © 2020 Tech</p>
       </div>
+      <BackTop />
     </div>
   );
 }

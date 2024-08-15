@@ -7,7 +7,7 @@ function Contact() {
   return (
     <div className="container mx-auto my-32">
       <SectionTitle Heading={"Get in Touch"}></SectionTitle>
-      <div className=" my-32">
+      <div className="">
         <ContactForm></ContactForm>
       </div>
     </div>

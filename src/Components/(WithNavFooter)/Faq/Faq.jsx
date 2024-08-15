@@ -83,26 +83,29 @@ function Faq() {
     },
   ];
   return (
-    <div className="container mx-auto">
-      <SectionTitle Heading={"Frequently Asked Questions"}></SectionTitle>
-      <ConfigProvider
-        theme={{
-          token: {},
+    <div>
+      <div className="container mx-auto py-32">
+        <SectionTitle Heading={"Frequently Asked Questions"}></SectionTitle>
+        <ConfigProvider
+          theme={{
+            token: {},
 
-          components: {
-            Collapse: {
-              borderRadiusLG: 0,
+            components: {
+              Collapse: {
+                borderRadiusLG: 0,
+              },
             },
-          },
-        }}
-      >
-        <div className="p-2">
-          <Collapse accordion items={items} />
-        </div>
-        <div className="p-2">
-          <QuickSupport></QuickSupport>
-        </div>
-      </ConfigProvider>
+          }}
+        >
+          <div className="p-2">
+            <Collapse accordion items={items} />
+          </div>
+          <div className="p-2">
+            <QuickSupport></QuickSupport>
+          </div>
+        </ConfigProvider>
+      </div>
+      <hr />
     </div>
   );
 }

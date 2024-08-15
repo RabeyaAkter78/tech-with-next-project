@@ -4,7 +4,7 @@ import React from "react";
 import { MdEmail } from "react-icons/md";
 function QuickSupport() {
   return (
-    <div className="my-20 text-center">
+    <div className="my-20 mx-auto text-center w-[50%]">
       <ConfigProvider
         theme={{
           token: {},
@@ -16,8 +16,8 @@ function QuickSupport() {
           },
         }}
       >
-        <h1 className="text-xl font-bold my-5">Want quick support?</h1>
-        <p>
+        <h1 className="text-xl font-semibold my-10">Want quick support?</h1>
+        <p className="mb-5 ">
           Get quick support 24/7 with our dedicated customer service team. We're
           here to help you manage your account, answer any questions, and
           resolve any issues. Trust us to make your experience stress-free and

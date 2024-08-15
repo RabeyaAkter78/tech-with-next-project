@@ -16,7 +16,6 @@ const NavBar = () => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    // Check if window is defined (i.e., we're in the browser)
     if (typeof window !== "undefined") {
       setIsMobile(window.innerWidth < 768);
 
@@ -26,7 +25,6 @@ const NavBar = () => {
 
       window.addEventListener("resize", handleResize);
 
-      // Cleanup event listener on component unmount
       return () => {
         window.removeEventListener("resize", handleResize);
       };
@@ -69,7 +67,7 @@ const NavBar = () => {
         },
       }}
     >
-      <div className="fixed top-0 left-0 w-[100%] z-40">
+      <div className="fixed top-0 left-0 w-[100%] z-40 bg-slate-100">
         <div className="container mx-auto flex items-center justify-center py-4 px-6 lg:px-8">
           <div className="flex items-center w-full">
             <Link href="/">
