@@ -1,13 +1,11 @@
 /* eslint-disable react/no-unescaped-entities */
 import SectionTitle from "@/Components/Shared/SectionTitle/SectionTitle";
-
 import React from "react";
 import CardComponents from "../HomeComponents/CardComponents";
 
 const AboutUs = () => {
   return (
     <div className="container mx-auto mt-36 mb-20">
-      {" "}
       <SectionTitle Heading={"About Us"}></SectionTitle>
       <div className="mt-24 mb-20 text-center ">
         <p>
@@ -22,9 +20,9 @@ const AboutUs = () => {
           the power to make a positive impact and create a better future for all
           of us.
         </p>
-        <div className="">
-          <CardComponents></CardComponents>
-        </div>
+      </div>
+      <div>
+        <CardComponents></CardComponents>
       </div>
     </div>
   );
