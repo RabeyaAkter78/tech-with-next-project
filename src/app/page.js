@@ -1,3 +1,5 @@
+// import "./globals.css";
+
 import AboutUs from "@/Components/(WithNavFooter)/AboutUs/AboutUs";
 import Contact from "@/Components/(WithNavFooter)/Contacts/Contact";
 import Faq from "@/Components/(WithNavFooter)/Faq/Faq";
@@ -7,12 +9,13 @@ import HowItWorks from "@/Components/(WithNavFooter)/HowItWorks/HowItWorks";
 import Pricing from "@/Components/(WithNavFooter)/Pricing/Pricing";
 import Footer from "@/Components/Shared/Footer/Footer";
 import NavBar from "@/Components/Shared/Navbar/Navbar";
-
+import Dashboard from "../../components/dashboard";
 export default function Home() {
   return (
     <main>
       <div className="">
         <NavBar />
+        <Dashboard></Dashboard>
         <Banner></Banner>
         <AboutUs></AboutUs>
         <Features></Features>

@@ -38,6 +38,7 @@ const NavBar = () => {
     { name: "FAQ", link: "/faq" },
     { name: "Pricing", link: "/pricing" },
     { name: "Contact", link: "/contact-us" },
+    { name: "SignIn", link: "/sign-in" },
   ];
 
   const handleMobileMenuClick = () => {
@@ -64,6 +65,11 @@ const NavBar = () => {
           Drawer: {
             colorText: "rgb(0,0,0)",
           },
+          Button: {
+            contentFontSize: 20,
+            paddingBlock: 10,
+            borderRadius: 2,
+          },
         },
       }}
     >
@@ -84,7 +90,7 @@ const NavBar = () => {
                 onClick={handleMobileMenuClick}
               />
             </div>
-            <div></div>
+
             <div className="hidden lg:flex ml-auto space-x-4">
               {labels.map((item, index) => (
                 <Link href={item.link} key={index}>
@@ -103,7 +109,7 @@ const NavBar = () => {
             </div>
           </div>
         </div>
-
+        {/* Drawer component */}
         <Drawer
           title="Menu"
           placement="right"
@@ -126,9 +132,13 @@ const NavBar = () => {
                   </button>
                 </Link>
               ))}
-              <Button type="primary" className="mt-4 w-full">
-                Login
-              </Button>
+              {labels.some((item) => item.name === "SignIn") && (
+                <Link href="/sign-in">
+                  <Button type="primary" className="mt-4 w-full">
+                    Sign In
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
         </Drawer>
