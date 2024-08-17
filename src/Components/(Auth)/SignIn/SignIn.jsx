@@ -1,20 +1,47 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
-
-import React from "react";
+import React, { useState } from "react";
+import { signIn, useSession } from "next-auth/react";
 import { Button, Checkbox, ConfigProvider, Form, Input } from "antd";
 import Link from "next/link";
 import SectionTitle from "@/Components/Shared/SectionTitle/SectionTitle";
+import { useRouter } from "next/navigation";
+
 function SignIn() {
-  const onFinish = (values) => {
-    console.log("Success:", values);
+  const [error, setError] = useState("");
+  const { data: session } = useSession();
+  const [form] = Form.useForm();
+  const router = useRouter();
+
+  const onFinish = async (values) => {
+    const { email, password } = values;
+
+    try {
+      const res = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
+
+      if (res?.error) {
+        setError("Invalid Credentials");
+        return;
+      }
+
+      router.replace("/dashboard");
+    } catch (error) {
+      console.log("Sign in error:", error);
+      setError("An unexpected error occurred. Please try again.");
+    }
   };
+
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+
   return (
     <div className="container mx-auto">
-      <SectionTitle Heading="SignIn to your Account"></SectionTitle>
+      <SectionTitle Heading="Sign In to Your Account" />
       <div className="p-5">
         <ConfigProvider
           theme={{
@@ -29,104 +56,72 @@ function SignIn() {
           }}
         >
           <Form
+            form={form}
             name="basic"
-            labelCol={{
-              xs: 24,
-              sm: 24,
-              md: 24,
-            }}
-            wrapperCol={{
-              xs: 24,
-              sm: 24,
-              md: 24,
-            }}
-            style={{
-              maxWidth: "100%",
-              width: "400px",
-              margin: "0 auto",
-            }}
-            initialValues={{
-              remember: true,
-            }}
+            labelCol={{ xs: 24, sm: 24, md: 24 }}
+            wrapperCol={{ xs: 24, sm: 24, md: 24 }}
+            style={{ maxWidth: "100%", width: "400px", margin: "0 auto" }}
+            initialValues={{ remember: true }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
           >
             <Form.Item
-              name="username"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your Full Name!",
-                },
-              ]}
-            >
-              <Input placeholder="Full Name" />
-            </Form.Item>
-            <Form.Item
               name="email"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your Email!",
-                },
-              ]}
+              rules={[{ required: true, message: "Please input your Email!" }]}
             >
               <Input placeholder="Email" />
             </Form.Item>
             <Form.Item
               name="password"
               rules={[
-                {
-                  required: true,
-                  message: "Please input your Password!",
-                },
+                { required: true, message: "Please input your Password!" },
               ]}
             >
-              <Input placeholder="Password" />
-            </Form.Item>
-            <Form.Item
-              name="confirm-password"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your Confirm-Password!",
-                },
-              ]}
-            >
-              <Input placeholder="Confirm-Password" />
+              <Input placeholder="Password" type="password" />
             </Form.Item>
 
             <Form.Item
               name="remember"
               valuePropName="checked"
-              wrapperCol={{
-                span: 16,
-              }}
+              wrapperCol={{ span: 16 }}
             >
               <Checkbox>Remember Me</Checkbox>
               <p className="text-center mt-2 mb-5 font-semibold">
                 Don't have an Account?
-                <span className="underline">
-                  <Link href="/sign-up">SignUp</Link>
+                <span className="underline ml-2">
+                  <Link href="/sign-up">Sign Up</Link>
                 </span>
               </p>
             </Form.Item>
 
-            <Form.Item
-              wrapperCol={{
-                span: 16,
-              }}
-            >
+            {error && (
+              <p className="text-xl font-bold text-red-500 text-center">
+                {error}
+              </p>
+            )}
+
+            <Form.Item wrapperCol={{ span: 16 }}>
               <Button
                 style={{ justifyContent: "center", alignItems: "center" }}
                 type="primary"
                 htmlType="submit"
               >
-                SignIn
+                Sign In
               </Button>
             </Form.Item>
           </Form>
+
+          <div className="container mx-auto my-10 text-center">
+            <div className="space-x-4">
+              <Button onClick={() => signIn("github")}>
+                Sign in with GitHub
+              </Button>
+              <Button onClick={() => signIn("google")}>
+                Sign in with Google
+              </Button>
+            </div>
+          </div>
         </ConfigProvider>
       </div>
     </div>

@@ -4,7 +4,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import "antd/dist/reset.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
-import SessionWrapper from "../../components/SessionWrapper";
+import SessionWrapper from "../Components/(Auth)/Providers/SessionWrapper";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {

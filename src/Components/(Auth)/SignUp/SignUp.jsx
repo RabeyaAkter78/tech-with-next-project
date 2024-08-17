@@ -1,21 +1,83 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
-
-import React from "react";
+import React, { useState } from "react";
+import { signIn, useSession } from "next-auth/react";
 import { Button, Checkbox, ConfigProvider, Form, Input } from "antd";
 import Link from "next/link";
 import SectionTitle from "@/Components/Shared/SectionTitle/SectionTitle";
+import { useRouter, redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../../../../lib/authOptions";
 
 function SignUp() {
-  const onFinish = (values) => {
-    console.log("Success:", values);
+  const router = useRouter();
+  const [error, setError] = useState();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  // console.log(formData);
+  const { data: session } = useSession();
+  const [form] = Form.useForm();
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
+
+  const onFinish = async () => {
+    const { name, email, password } = formData;
+
+    try {
+      const resUserExists = await fetch("api/userExists", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+      const { user } = await resUserExists.json();
+      if (user) {
+        setError("User Already Exist.");
+        return;
+      }
+
+      const res = await fetch("api/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+        }),
+      });
+
+      if (res.ok) {
+        form.resetFields();
+        router.push("/sign-in");
+      } else {
+        console.log("Sign up failed");
+      }
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  };
+
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+
   return (
-    <div className="container mx-auto my-32">
-      <SectionTitle Heading="SignUp"></SectionTitle>
+    <div className="container mx-auto mt-20">
+      <SectionTitle Heading="Sign up" />
       <div className="p-5">
         <ConfigProvider
           theme={{
@@ -30,104 +92,120 @@ function SignUp() {
           }}
         >
           <Form
+            form={form}
             name="basic"
-            labelCol={{
-              xs: 24,
-              sm: 24,
-              md: 24,
-            }}
-            wrapperCol={{
-              xs: 24,
-              sm: 24,
-              md: 24,
-            }}
-            style={{
-              maxWidth: "100%",
-              width: "400px",
-              margin: "0 auto",
-            }}
-            initialValues={{
-              remember: true,
-            }}
+            labelCol={{ xs: 24, sm: 24, md: 24 }}
+            wrapperCol={{ xs: 24, sm: 24, md: 24 }}
+            style={{ maxWidth: "100%", width: "400px", margin: "0 auto" }}
+            initialValues={{ remember: true }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
           >
             <Form.Item
-              name="username"
+              name="name"
               rules={[
-                {
-                  required: true,
-                  message: "Please input your Full Name!",
-                },
+                { required: true, message: "Please input your Full Name!" },
               ]}
             >
-              <Input placeholder="Full Name" />
+              <Input
+                placeholder="Full Name"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+              />
             </Form.Item>
             <Form.Item
               name="email"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your Email!",
-                },
-              ]}
+              rules={[{ required: true, message: "Please input your Email!" }]}
             >
-              <Input placeholder="Email" />
+              <Input
+                placeholder="Email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+              />
             </Form.Item>
             <Form.Item
               name="password"
               rules={[
-                {
-                  required: true,
-                  message: "Please input your Password!",
-                },
+                { required: true, message: "Please input your Password!" },
               ]}
             >
-              <Input placeholder="Password" />
+              <Input
+                placeholder="Password"
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
+              />
             </Form.Item>
             <Form.Item
-              name="confirm-password"
+              name="confirmPassword"
               rules={[
                 {
                   required: true,
-                  message: "Please input your Confirm-Password!",
+                  message: "Please input your Confirm Password!",
                 },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue("password") === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(new Error("Passwords do not match!"));
+                  },
+                }),
               ]}
             >
-              <Input placeholder="Confirm-Password" />
+              <Input
+                placeholder="Confirm Password"
+                type="password"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleInputChange}
+              />
             </Form.Item>
 
             <Form.Item
               name="remember"
               valuePropName="checked"
-              wrapperCol={{
-                span: 16,
-              }}
+              wrapperCol={{ span: 16 }}
             >
               <Checkbox>Remember Me</Checkbox>
+
               <p className="text-center mt-2 mb-5 font-semibold">
                 Already have an Account?
-                <span className="underline">
-                  <Link href="/sign-in">SignIn</Link>
+                <span className="underline ml-2">
+                  <Link href="/sign-in">Sign In</Link>
                 </span>
               </p>
             </Form.Item>
-
-            <Form.Item
-              wrapperCol={{
-                span: 16,
-              }}
-            >
+            {error && (
+              <p className="text-xl font-bold text-red-500 text-center">
+                {error}
+              </p>
+            )}
+            <Form.Item wrapperCol={{ span: 16 }}>
               <Button
                 style={{ justifyContent: "center", alignItems: "center" }}
                 type="primary"
                 htmlType="submit"
               >
-                SignIn
+                Sign Up
               </Button>
             </Form.Item>
           </Form>
+
+          <div className="container mx-auto my-10 text-center">
+            <div className="space-x-4">
+              <Button onClick={() => signIn("github")}>
+                Sign in with GitHub
+              </Button>
+              <Button onClick={() => signIn("google")}>
+                Sign in with Google
+              </Button>
+            </div>
+          </div>
         </ConfigProvider>
       </div>
     </div>
