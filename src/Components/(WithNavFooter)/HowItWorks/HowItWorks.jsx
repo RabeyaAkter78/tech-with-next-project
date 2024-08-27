@@ -13,7 +13,7 @@ function HowItWorks() {
             type="link"
             href="https://youtu.be/tUP5S4YdEJo?si=oUhfasmDj1k5eNiP"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
+            allowFullScreen
           >
             <IoPlayCircleOutline className="h-32 w-32 text-white" />
           </Button>

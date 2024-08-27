@@ -2,14 +2,16 @@
 
 import { useEffect, useState } from "react";
 import "antd/dist/reset.css";
-import { Button, ConfigProvider, Drawer } from "antd";
+import { Button, ConfigProvider, Drawer, Tooltip } from "antd";
 import { RxHamburgerMenu } from "react-icons/rx";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "../../../assets/logo.png";
 import { usePathname } from "next/navigation";
-
+import { signOut, useSession } from "next-auth/react";
+import { AllImages } from "@/assets/AllImages";
 const NavBar = () => {
+  const { data: session } = useSession();
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [selected, setSelected] = useState(null);
   const path = usePathname();
@@ -38,7 +40,6 @@ const NavBar = () => {
     { name: "FAQ", link: "/faq" },
     { name: "Pricing", link: "/pricing" },
     { name: "Contact", link: "/contact-us" },
-    { name: "SignIn", link: "/sign-in" },
   ];
 
   const handleMobileMenuClick = () => {
@@ -106,9 +107,55 @@ const NavBar = () => {
                   </button>
                 </Link>
               ))}
+              {/* Sign in sign out */}
+              {!session ? (
+                <Link href="/sign-in">
+                  <Button className="px-4 font-medium text-lg">SignIn</Button>
+                </Link>
+              ) : (
+                <Tooltip title={session.user?.name}>
+                  <div className="flex items-center space-x-2">
+                    <Image
+                      height={0}
+                      width={0}
+                      src={session.user?.image || AllImages.UserImg}
+                      alt="user Image"
+                      className="h-10 w-10 border border-neutral-500 rounded-full cursor-pointer"
+                      onClick={() => signOut()}
+                    />
+                    <span
+                      className="font-medium text-lg cursor-pointer"
+                      onClick={() => signOut()}
+                    >
+                      Logout
+                    </span>
+                  </div>
+                </Tooltip>
+              )}
+
+              {/* {!session ? (
+                <Link href="/sign-in">
+                  <button className="px-4 font-medium text-lg">SignIn</button>
+                </Link>
+              ) : (
+                <Tooltip title={session.user.name}>
+                  <div className="flex items-center space-x-2">
+                    <Image
+                      src={session.user.image || userImage}
+                      alt="User Image"
+                      className="h-10 w-10 rounded-full cursor-pointer"
+                      onClick={() => signOut()}
+                    />
+                    <span className="font-medium text-lg cursor-pointer" onClick={() => signOut()}>
+                      Logout
+                    </span>
+                  </div>
+                </Tooltip>
+              )} */}
             </div>
           </div>
         </div>
+
         {/* Drawer component */}
         <Drawer
           title="Menu"
@@ -124,7 +171,7 @@ const NavBar = () => {
                     className={`px-4 font-medium text-lg ${
                       selected === index
                         ? "border-0 border-b-2 border-green-700"
-                        : ""
+                        : "border-b"
                     }`}
                     onClick={() => select(index)}
                   >
@@ -132,12 +179,29 @@ const NavBar = () => {
                   </button>
                 </Link>
               ))}
-              {labels.some((item) => item.name === "SignIn") && (
-                <Link href="/sign-in">
-                  <Button type="primary" className="mt-4 w-full">
-                    Sign In
-                  </Button>
+              {!session ? (
+                <Link href="sign-in">
+                  <Button className="px-4 font-medium text-lg">SignIn</Button>
                 </Link>
+              ) : (
+                <Tooltip title={session.user?.name}>
+                  <div className="flex items-center space-x-2">
+                    <Image
+                      height={0}
+                      width={0}
+                      src={session.user?.image ||AllImages.UserImg}
+                      alt="User Image"
+                      className="h-10 w-10 border border-neutral-500 rounded-full cursor-pointer"
+                      onClick={() => signOut()}
+                    />
+                    <span
+                      className="font-medium text-lg cursor-pointer"
+                      onClick={() => signOut()}
+                    >
+                      LogOut
+                    </span>
+                  </div>
+                </Tooltip>
               )}
             </div>
           </div>

@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { Button, Checkbox, ConfigProvider, Form, Input } from "antd";
+import { FaGoogle } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
 import Link from "next/link";
 import SectionTitle from "@/Components/Shared/SectionTitle/SectionTitle";
 import { useRouter } from "next/navigation";
@@ -21,6 +23,8 @@ function SignIn() {
         redirect: false,
         email,
         password,
+        callbackUrl: router.query?.callbackUrl || "/",
+        // Redirect to the intend url
       });
 
       if (res?.error) {
@@ -28,7 +32,7 @@ function SignIn() {
         return;
       }
 
-      router.replace("/dashboard");
+      router.replace(res.url || "/");
     } catch (error) {
       console.log("Sign in error:", error);
       setError("An unexpected error occurred. Please try again.");
@@ -36,7 +40,7 @@ function SignIn() {
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+    // console.log("Failed:", errorInfo);
   };
 
   return (
@@ -114,11 +118,23 @@ function SignIn() {
 
           <div className="container mx-auto my-10 text-center">
             <div className="space-x-4">
-              <Button onClick={() => signIn("github")}>
-                Sign in with GitHub
+              <Button
+                onClick={() =>
+                  signIn("github", {
+                    callbackUrl: router.query?.callbackUrl || "/",
+                  })
+                }
+              >
+                <FaGithub /> Sign in with GitHub
               </Button>
-              <Button onClick={() => signIn("google")}>
-                Sign in with Google
+              <Button
+                onClick={() =>
+                  signIn("google", {
+                    callbackUrl: router.query?.callbackUrl || "/",
+                  })
+                }
+              >
+                <FaGoogle /> Sign in with Google
               </Button>
             </div>
           </div>

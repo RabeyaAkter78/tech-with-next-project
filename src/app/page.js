@@ -15,7 +15,7 @@ export default function Home() {
     <main>
       <div className="">
         <NavBar />
-        <Dashboard></Dashboard>
+        {/* <Dashboard></Dashboard> */}
         <Banner></Banner>
         <AboutUs></AboutUs>
         <Features></Features>

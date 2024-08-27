@@ -5,11 +5,29 @@ import { signIn, useSession } from "next-auth/react";
 import { Button, Checkbox, ConfigProvider, Form, Input } from "antd";
 import Link from "next/link";
 import SectionTitle from "@/Components/Shared/SectionTitle/SectionTitle";
-import { useRouter, redirect } from "next/navigation";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../../../../lib/authOptions";
-
+import { useRouter } from "next/navigation";
+import { FaGithub, FaGoogle } from "react-icons/fa";
+import { Upload } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 function SignUp() {
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewImage, setPreviewImage] = useState("");
+  const [fileList, setFileList] = useState([]);
+  const uploadButton = (
+    <div>
+      <PlusOutlined />
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </div>
+  );
+  const handlePreview = async (file) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
+    setPreviewImage(file.url || file.preview);
+    setPreviewOpen(true);
+  };
+
+  const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
   const router = useRouter();
   const [error, setError] = useState();
   const [formData, setFormData] = useState({
@@ -59,6 +77,7 @@ function SignUp() {
           password,
         }),
       });
+      console.log(res, "res");
 
       if (res.ok) {
         form.resetFields();
@@ -78,6 +97,17 @@ function SignUp() {
   return (
     <div className="container mx-auto mt-20">
       <SectionTitle Heading="Sign up" />
+      <div className="flex justify-center items-center my-8">
+        <Upload
+          name="avatar"
+          listType="picture-card"
+          fileList={fileList}
+          onPreview={handlePreview}
+          onChange={handleChange}
+        >
+          {fileList.length >= 1 ? null : uploadButton}
+        </Upload>
+      </div>
       <div className="p-5">
         <ConfigProvider
           theme={{
@@ -199,10 +229,10 @@ function SignUp() {
           <div className="container mx-auto my-10 text-center">
             <div className="space-x-4">
               <Button onClick={() => signIn("github")}>
-                Sign in with GitHub
+                <FaGithub /> Sign in with GitHub
               </Button>
               <Button onClick={() => signIn("google")}>
-                Sign in with Google
+                <FaGoogle /> Sign in with Google
               </Button>
             </div>
           </div>

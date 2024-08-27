@@ -1,14 +1,25 @@
-import React from "react";
-import { Button, Checkbox, ConfigProvider, Form, Input } from "antd";
+import React, { useState } from "react";
+import { Button, Checkbox, ConfigProvider, Form, Input, Upload } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 import TextArea from "antd/es/input/TextArea";
 
-function ContactForm() {
+const ContactForm = () => {
   const onFinish = (values) => {
     console.log("Success:", values);
   };
+
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+
+  const getBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+
   return (
     <div className="flex justify-center items-center p-5">
       <ConfigProvider
@@ -25,24 +36,10 @@ function ContactForm() {
       >
         <Form
           name="basic"
-          labelCol={{
-            xs: 24,
-            sm: 24,
-            md: 24,
-          }}
-          wrapperCol={{
-            xs: 24,
-            sm: 24,
-            md: 24,
-          }}
-          style={{
-            maxWidth: "100%",
-            width: "800px",
-            margin: "0 auto",
-          }}
-          initialValues={{
-            remember: true,
-          }}
+          labelCol={{ span: 24 }}
+          wrapperCol={{ span: 24 }}
+          style={{ maxWidth: "100%", width: "800px", margin: "0 auto" }}
+          initialValues={{ remember: true }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           autoComplete="off"
@@ -50,22 +47,14 @@ function ContactForm() {
           <Form.Item
             name="username"
             rules={[
-              {
-                required: true,
-                message: "Please input your Full Name!",
-              },
+              { required: true, message: "Please input your Full Name!" },
             ]}
           >
             <Input placeholder="Full Name" />
           </Form.Item>
           <Form.Item
             name="email"
-            rules={[
-              {
-                required: true,
-                message: "Please input your Email!",
-              },
-            ]}
+            rules={[{ required: true, message: "Please input your Email!" }]}
           >
             <Input placeholder="Email" />
           </Form.Item>
@@ -82,31 +71,25 @@ function ContactForm() {
           </Form.Item>
           <Form.Item
             name="subject"
-            rules={[
-              {
-                required: true,
-                message: "Please input your Subject!",
-              },
-            ]}
+            rules={[{ required: true, message: "Please input your Subject!" }]}
           >
-            <Input placeholder="subject" />
+            <Input placeholder="Subject" />
           </Form.Item>
-          <TextArea rows={4} placeholder="Message" />
+          <Form.Item
+            name="message"
+            rules={[{ required: true, message: "Please input your Message!" }]}
+          >
+            <TextArea rows={4} placeholder="Message" />
+          </Form.Item>
           <Form.Item
             name="remember"
             valuePropName="checked"
-            wrapperCol={{
-              span: 16,
-            }}
+            wrapperCol={{ span: 16 }}
           >
             <Checkbox>Remember me</Checkbox>
           </Form.Item>
 
-          <Form.Item
-            wrapperCol={{
-              span: 16,
-            }}
-          >
+          <Form.Item wrapperCol={{ span: 16 }}>
             <Button type="primary" htmlType="submit">
               Submit
             </Button>
@@ -115,6 +98,6 @@ function ContactForm() {
       </ConfigProvider>
     </div>
   );
-}
+};
 
 export default ContactForm;
