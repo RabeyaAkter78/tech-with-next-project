@@ -116,8 +116,8 @@ const NavBar = () => {
                 <Tooltip title={session.user?.name}>
                   <div className="flex items-center space-x-2">
                     <Image
-                      height={0}
-                      width={0}
+                      height={5}
+                      width={5}
                       src={session.user?.image || AllImages.UserImg}
                       alt="user Image"
                       className="h-10 w-10 border border-neutral-500 rounded-full cursor-pointer"
@@ -187,8 +187,8 @@ const NavBar = () => {
                 <Tooltip title={session.user?.name}>
                   <div className="flex items-center space-x-2">
                     <Image
-                      height={0}
-                      width={0}
+                      height={5}
+                      width={5}
                       src={session.user?.image ||AllImages.UserImg}
                       alt="User Image"
                       className="h-10 w-10 border border-neutral-500 rounded-full cursor-pointer"

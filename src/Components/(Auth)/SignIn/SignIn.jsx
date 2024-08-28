@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { Button, Checkbox, ConfigProvider, Form, Input } from "antd";
-import { FaGoogle } from "react-icons/fa";
+import { FaFacebook, FaGoogle } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import Link from "next/link";
 import SectionTitle from "@/Components/Shared/SectionTitle/SectionTitle";
@@ -135,6 +135,15 @@ function SignIn() {
                 }
               >
                 <FaGoogle /> Sign in with Google
+              </Button>
+              <Button
+                onClick={() =>
+                  signIn("facebook", {
+                    callbackUrl: router.query?.callbackUrl || "/",
+                  })
+                }
+              >
+                <FaFacebook /> Sign in with Facebook
               </Button>
             </div>
           </div>
